@@ -38,21 +38,17 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Maombi yameghairiwa.")
     return ConversationHandler.END
 
-def main():
+import asyncio
+from telegram.ext import Application
+
+async def main():
     app = Application.builder().token("YOUR_BOT_TOKEN").build()
-
-    conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("start", start)],
-        states={
-            NAME: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_name)],
-            PHONE: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_phone)],
-            EMAIL: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_email)],
-        },
-        fallbacks=[CommandHandler("cancel", cancel)]
-    )
-
-    app.add_handler(conv_handler)
-    app.run_polling()
+    
+    # Add your handlers here
+    # app.add_handler(CommandHandler("start", start))
+    
+    print("Bot started")
+    await app.run_polling()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
